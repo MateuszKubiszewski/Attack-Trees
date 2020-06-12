@@ -1,0 +1,41 @@
+Attack/defence trees (ADTrees) are a well-known formalism for reasoning
+about various configurations of attacking and defending parties.
+The root node corresponds to the main goal (e.g. successful heist),
+and its children to more specific actions with an increasing level of granularity
+(e.g. steal treasure, infiltrate vault, disable alarm).
+These nodes intutively correspond to logic gates such as AND, OR, etc. Each node has a text label (name),
+as well as numerical attributes that can be the subject of analysis, such as attack time or cost.
+
+Your task is to:
+1) complete the implementation of a parser that takes text input in the prefix notation and builds an ADTree.
+
+Invididual nodes are separated with spaces in the input and described as follows: TYPE,NAME,COST,TIME.
+Example: AND,TF,0,0 OR,GA,0,0 LEAF,h,500,3 LEAF,e,0,10 AND,ST,0,2 LEAF,b,500,60 LEAF,f,100,120.
+Since parsing is not the main focus of the task, initial string operations are already implemented,
+and only the actual construction of the ADTree needs to be added.
+Hint: depending on node type, either return a leaf or apply recursion to define descendants of AND/OR nodes.
+For the sake of simplicity, assume fixed number of children (two) for AND/OR nodes.
+
+
+2) add functionality to evaluate the tree (determine whether the root node's action is successful or not
+within the context of a particular configuration of leaf nodes' outcomes).
+
+The status of actions in leaf nodes is set by the user before the evaluation, via the methods of the ADTreeContext class.
+It stores boolean variables whose names should correspond to labels of ADTree nodes.
+In case no variable is set for a leaf node, the status of its action is determined at random during the evaluation.
+Actions in AND nodes are successful iff all their children are successful.
+Actions in OR nodes are successful iff at least one of their children is successful.
+Ultimately, the evaulation should return a boolean value corresponding to the status of the root node's action.
+
+3) extend the solution, adding functionality to instead evaluate the minimum cost and minimum time of an attack.
+
+In this case, the evaluation should return the appropriate integer value.
+Note that since the minimum possible cost and time are of interest, all leaf nodes should be considered
+(regardless of the outcome of their actions set by the user in ADTreeContext).
+
+Note: it should be possible to add functionality to evaluate the tree in other ways, possibly with different return types,
+without further modifications to existing classes and interfaces (except for adding a new call in the main program).
+Similarly, any changes to existing evaluation functionality (e.g. to determine maximum instead of minimum attack time),
+should not affect classes representing ADTree nodes.
+One use of switch() is allowed, in the implementation of the parser.
+Existing code cannot be modified, except for adding missing fragments specifically marked with comments.
